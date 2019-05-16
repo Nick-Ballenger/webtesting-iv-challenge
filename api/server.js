@@ -11,11 +11,13 @@ server.use(express.json());
 server.use('cors')
 
 
-
+//get harry
 server.get('/', (req, res) => {
     res.status(200).json({ name: 'Harry' });
 });
 
+
+//delete
 server.delete('/potterChar', async(req, res) => {
     const potterChar = req.body;
 
@@ -30,6 +32,19 @@ server.delete('/potterChar', async(req, res) => {
 
     } else {
         res.status(400).json({message: 'Please state which character needs to be deleted'});
+    }
+});
+
+
+server.post('/potterChar', async(req, res) => {
+    const potterCHar = req.body;
+
+    if(potterCHar.name) {
+        const posted = await potterhelper.add(potterChar);
+
+        res.status(201).json(posted);
+    } else {
+        res.status(400).json({ message: 'Everyone needs a name, even Potter pals' })
     }
 });
 
